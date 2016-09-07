@@ -12,21 +12,43 @@ public class Welcome {
 	public static void main(String[] args) {
 		System.out.println("Welcome MSCI Mobile Shopping Portal");
 		DatabaseOperations DB_Ops = new DatabaseOperations();
-		System.out.println("Available Brands:");
-		DB_Ops.getMobileBrands();
+		
+		// SOP the categories
+		DB_Ops.getCategory();
+		System.out.println("");
+		
+//		String category = reader;
+//		DB_Ops.getSubCategory(category);
+		
+//		System.out.println("Available Brands:");
+//		DB_Ops.getMobileBrands();
 		
 		String brand;
-		System.out.println("Enter brand name:");
+		String category;
+		String sub_category;
+		
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		try {
-	        String str = reader.readLine();
-	        brand="\'"+ str +"\' ";
-	        DB_Ops.getMobileModels(brand);	
-	        String model;
-			System.out.println("Enter model name:");
-			String str1 = reader.readLine();
-	        model="\'"+ str1+"\' ";
-	        DB_Ops.getModelDetails(brand, model);
+			
+			// SOP THE SUBCATEGORIES
+			System.out.println("Choose one of above categories: ");
+			String str = reader.readLine();
+			category = "\'"+ str +"\' ";
+			DB_Ops.getSubCategory(category);
+			System.out.println("");
+			
+			// SOP THE BRANDNAMES
+	        System.out.println("Enter sub category:");
+	        String str1 = reader.readLine();
+	        sub_category= str1;
+	        DB_Ops.getBrands(sub_category);
+	        
+	        //DB_Ops.getMobileModels(brand);	
+	        //String model;
+			//System.out.println("Enter model name:");
+			//String str2 = reader.readLine();
+	        //model="\'"+ str2+"\' ";
+	        //DB_Ops.getModelDetails(brand, model);
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }		
