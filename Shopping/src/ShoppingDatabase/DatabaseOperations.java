@@ -10,7 +10,7 @@ public class DatabaseOperations {
 	private String DB_URL = "jdbc:mysql://localhost:3306/INVENTORY";
 	private String USER = "root";
 	private String PASS = "itsmyroot";
-	//private Connection conn;
+	//private Connection conn = DriverManager.getConnection(DB_URL,USER,PASS);
 	
 	public void getMobileBrands() {
 		try {
