@@ -1,50 +1,102 @@
 package ShoppingDatabase;
 
 import java.beans.Statement;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.*;
 
 public class DatabaseOperations {
 	private String DB_URL = "jdbc:mysql://localhost:3306/INVENTORY";
 	private String USER = "root";
 	private String PASS = "itsmyroot";
+	
+	
 	//private Connection conn = DriverManager.getConnection(DB_URL,USER,PASS);
 	
-	public void getMobileBrands() {
+	public void getCategory() {
+		System.out.println("Categories availible: ");
 		try {
-			//System.out.println(USER);
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(DB_URL,USER,PASS);
-			//System.out.println("Connection: "+conn);		
-			java.sql.Statement stmDha = conn.createStatement();
-			String query = "SELECT BRAND FROM SMARTPHONES1 GROUP BY BRAND";
-			ResultSet rs =  stmDha.executeQuery(query);
-			while (rs.next()) {
-				System.out.println(rs.getString("BRAND")+" ");
+			//System.out.println("Connection:"+conn);
+			
+			java.sql.Statement stmt = conn.createStatement();
+			String query = "SELECT DISTINCT CATEGORY FROM CATEGORY";
+			ResultSet rs = stmt.executeQuery(query);
+			while(rs.next()) {
+				System.out.println(rs.getString("CATEGORY")+" ");
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+		} catch(SQLException e1){
+			
+		} catch (ClassNotFoundException e2) {
+			
 		}
 	}
 	
-	public void getMobileModels(String brand) {
+	// Method to get SubCategories	
+	public void getSubCategory(String category) {
+		System.out.println("Sub Categories in " + category+ "are: ");
 		try {
-			//System.out.println(USER);
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			//System.out.println("Connection:"+conn);
+			//category = "\'"+category+"\'";
+			java.sql.Statement stmt = conn.createStatement();
+			String query = "SELECT SUB_CATEGORY FROM CATEGORY WHERE CATEGORY ="+category;
+			ResultSet rs = stmt.executeQuery(query);
+			while(rs.next()) {
+				System.out.println(rs.getString("SUB_CATEGORY")+" ");
+			}
+			
+		} catch(SQLException e1) {
+			
+		} catch(ClassNotFoundException e2) {
+			
+		}
+	}
+	
+	// Method to getBrands
+	public void getBrands(String sub_category) {
+		try {
+			System.out.println("Brands availible in "+sub_category);
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(DB_URL,USER,PASS);
 			//System.out.println("Connection: "+conn);		
+			
+			java.sql.Statement stmt= conn.createStatement();
+			String query = "SELECT DISTINCT BRAND FROM "+sub_category;
+			ResultSet rs =  stmt.executeQuery(query);
+			while (rs.next()) {
+				System.out.println(rs.getString("BRAND")+" ");
+			}
+			
+		} catch (SQLException e1) {
+			//e.printStackTrace();
+		} catch (ClassNotFoundException e2) {
+			
+		}
+	}
+	
+	
+	// Method to get 
+	public void getMobileModels(String brand) {
+		try {
+			
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			//System.out.println("Connection: "+conn);		
+			
 			java.sql.Statement stmDha = conn.createStatement();
 			String query = "SELECT PRODUCT_NAME FROM SMARTPHONES1 WHERE BRAND =" + brand+"GROUP BY PRODUCT_NAME";
 			ResultSet rs =  stmDha.executeQuery(query);
+			
 			while (rs.next()) {
 				System.out.println(rs.getString("PRODUCT_NAME")+" ");
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+		} catch (SQLException e1) {
+			//e.printStackTrace();
+		} catch (ClassNotFoundException e2) {
+			
 		}
 	}
 	
@@ -58,6 +110,7 @@ public class DatabaseOperations {
 			String query = "SELECT * FROM SMARTPHONES1 WHERE BRAND =" + brand+"AND PRODUCT_NAME="+model;
 			ResultSet rs =  stmDha.executeQuery(query);
 			while (rs.next()) {
+				System.out.print(rs.getInt("PID")+" ");
 				System.out.print(rs.getString("BRAND")+" ");
 				System.out.print(rs.getString("PRODUCT_NAME")+" ");
 				System.out.print(rs.getInt("PRICE")+" ");
