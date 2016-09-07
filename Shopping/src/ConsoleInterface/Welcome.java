@@ -39,10 +39,16 @@ public class Welcome {
 			
 			// SOP THE BRANDNAMES
 	        System.out.println("Enter sub category:");
-	        String str1 = reader.readLine();
-	        sub_category= str1;
+	        str = reader.readLine();
+	        sub_category= str;
 	        DB_Ops.getBrands(sub_category);
 	        
+	        
+	        // SOP the models
+			 System.out.println("Enter brand name:");
+			 str = reader.readLine();
+			 brand = "\'"+str+"\'";
+			 DB_Ops.getBrandDetails(sub_category, brand);
 	        //DB_Ops.getMobileModels(brand);	
 	        //String model;
 			//System.out.println("Enter model name:");

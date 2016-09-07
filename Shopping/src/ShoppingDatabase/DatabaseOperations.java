@@ -75,40 +75,16 @@ public class DatabaseOperations {
 			
 		}
 	}
-	
-	
-	// Method to get 
-	public void getMobileModels(String brand) {
+		
+	public void getBrandDetails(String sub_category,String brand) {
 		try {
-			
+			System.out.println(brand);
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(DB_URL,USER,PASS);
 			//System.out.println("Connection: "+conn);		
-			
-			java.sql.Statement stmDha = conn.createStatement();
-			String query = "SELECT PRODUCT_NAME FROM SMARTPHONES1 WHERE BRAND =" + brand+"GROUP BY PRODUCT_NAME";
-			ResultSet rs =  stmDha.executeQuery(query);
-			
-			while (rs.next()) {
-				System.out.println(rs.getString("PRODUCT_NAME")+" ");
-			}
-			
-		} catch (SQLException e1) {
-			//e.printStackTrace();
-		} catch (ClassNotFoundException e2) {
-			
-		}
-	}
-	
-	public void getModelDetails(String brand, String model) {
-		try {
-			//System.out.println(USER);
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection(DB_URL,USER,PASS);
-			//System.out.println("Connection: "+conn);		
-			java.sql.Statement stmDha = conn.createStatement();
-			String query = "SELECT * FROM SMARTPHONES1 WHERE BRAND =" + brand+"AND PRODUCT_NAME="+model;
-			ResultSet rs =  stmDha.executeQuery(query);
+			java.sql.Statement stmt = conn.createStatement();
+			String query = "SELECT * FROM " + sub_category+ " WHERE BRAND =" + brand;
+			ResultSet rs =  stmt.executeQuery(query);
 			while (rs.next()) {
 				System.out.print(rs.getInt("PID")+" ");
 				System.out.print(rs.getString("BRAND")+" ");
