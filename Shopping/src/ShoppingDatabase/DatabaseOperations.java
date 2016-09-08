@@ -36,6 +36,7 @@ public class DatabaseOperations {
 	public void getSubCategory(String category) {
 		System.out.println("Sub Categories in " + category+ "are: ");
 		try {
+			
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(DB_URL,USER,PASS);
 			//System.out.println("Connection:"+conn);
@@ -43,6 +44,7 @@ public class DatabaseOperations {
 			java.sql.Statement stmt = conn.createStatement();
 			String query = "SELECT SUB_CATEGORY FROM CATEGORY WHERE CATEGORY ="+category;
 			ResultSet rs = stmt.executeQuery(query);
+			
 			while(rs.next()) {
 				System.out.println(rs.getString("SUB_CATEGORY")+" ");
 			}
