@@ -93,13 +93,69 @@ public class DatabaseOperations {
 				System.out.print(rs.getString("COLOUR")+" ");
 				System.out.println(rs.getBoolean("EMI")+" ");
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (SQLException e1) {
+			//e.printStackTrace();
+		} catch (ClassNotFoundException e2) {
+			
+		}
+	}		
+	
+	// method to purchase item
+	public void PurchaseItem(String sub_category, int pid, int quantity) {
+		try {
+			System.out.println("Welcome to purchase");
+			int tmpQuantity;
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			//System.out.println("Connection: "+conn);		
+			java.sql.Statement stmt = conn.createStatement();
+			String query = "SELECT QUANTITY FROM " + sub_category+ " WHERE PID =" + pid;
+			ResultSet rs = stmt.executeQuery(query);
+			rs.next();
+			tmpQuantity = rs.getInt(1);
+			
+			if (tmpQuantity >= quantity){
+				System.out.println("Purchase is successfull");
+				setNcheckQuantity(sub_category, pid, quantity);
+			}
+			else {
+				System.out.println("Quantity is not appropriate: " );
+				System.out.println("Availible quantity: "+tmpQuantity);
+			}
+						
+		} catch (SQLException e1) {
+			//e.printStackTrace();
+		} catch (ClassNotFoundException e2) {
+			
 		}
 		
-	
 	}
 	
-	
+	// to update the quantity after purchase
+	private void setNcheckQuantity(String sub_category, int pid, int quantity) {
+		int tmpQuantity;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(DB_URL,USER,PASS);
+			//System.out.println("Connection: "+conn);		
+			java.sql.Statement stmt = conn.createStatement();
+			String query = "SELECT QUANTITY FROM " + sub_category+ " WHERE PID =" + pid;
+			ResultSet rs = stmt.executeQuery(query);
+			rs.next();
+			tmpQuantity = rs.getInt(1);
+			//System.out.println("Before:"+tmpQuantity);
+			tmpQuantity = tmpQuantity - quantity;
+			//System.out.println("After:"+tmpQuantity);
+			String query1 = "UPDATE "+sub_category +" SET QUANTITY ="+tmpQuantity +" WHERE PID="+ pid;
+			//System.out.println(query1);
+			stmt.executeUpdate(query1);
+			
+			
+		} catch (SQLException e1) {
+			//e.printStackTrace();
+		} catch (ClassNotFoundException e2) {
+			
+		}
+	}
+			
 }
