@@ -26,6 +26,8 @@ public class Welcome {
 		String brand;
 		String category;
 		String sub_category;
+		int pid;
+		int quantity;
 		
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		try {
@@ -49,6 +51,15 @@ public class Welcome {
 			 str = reader.readLine();
 			 brand = "\'"+str+"\'";
 			 DB_Ops.getBrandDetails(sub_category, brand);
+			 
+			 
+			 // Purchasing
+			 
+			 System.out.println("Please enter PID of your choosen model");
+			 pid= Integer.parseInt(reader.readLine());
+			 System.out.println("Please enter Quantiy");
+			 quantity = Integer.parseInt(reader.readLine());
+			 DB_Ops.PurchaseItem(sub_category, pid, quantity);
 	        //DB_Ops.getMobileModels(brand);	
 	        //String model;
 			//System.out.println("Enter model name:");
