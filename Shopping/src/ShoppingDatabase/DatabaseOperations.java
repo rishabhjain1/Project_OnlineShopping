@@ -1,6 +1,9 @@
 package ShoppingDatabase;
 
 import java.beans.Statement;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.*;
 
 public class DatabaseOperations {
@@ -124,11 +127,17 @@ public class DatabaseOperations {
 			else {
 				System.out.println("Quantity is not appropriate: " );
 				System.out.println("Availible quantity: "+tmpQuantity);
+				System.out.println("Enter New quantity");
+				BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+				quantity = Integer.parseInt(reader.readLine());
+				this.PurchaseItem(sub_category, pid, quantity);
 			}
 						
 		} catch (SQLException e1) {
 			//e.printStackTrace();
 		} catch (ClassNotFoundException e2) {
+			
+		} catch (IOException e3) {
 			
 		}
 		
