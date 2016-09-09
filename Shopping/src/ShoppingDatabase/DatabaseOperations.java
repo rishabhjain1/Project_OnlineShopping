@@ -12,7 +12,7 @@ public class DatabaseOperations {
 	//private Connection conn = DriverManager.getConnection(DB_URL,USER,PASS);
 	
 	public void getCategory() {
-		System.out.println("Categories availible: ");
+		System.out.println("Categories available: ");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(DB_URL,USER,PASS);
@@ -86,12 +86,15 @@ public class DatabaseOperations {
 			String query = "SELECT * FROM " + sub_category+ " WHERE BRAND =" + brand;
 			ResultSet rs =  stmt.executeQuery(query);
 			while (rs.next()) {
-				System.out.print(rs.getInt("PID")+" ");
-				System.out.print(rs.getString("BRAND")+" ");
-				System.out.print(rs.getString("PRODUCT_NAME")+" ");
-				System.out.print(rs.getInt("PRICE")+" ");
-				System.out.print(rs.getString("COLOUR")+" ");
-				System.out.println(rs.getBoolean("EMI")+" ");
+				
+				System.out.printf("%5d %-10s %-10s %-7d %-10s %-2b\n", rs.getInt("PID"), rs.getString("BRAND"), rs.getString("PRODUCT_NAME"), rs.getInt("PRICE"), rs.getString("COLOUR"), rs.getBoolean("EMI"));
+				
+				//System.out.print(rs.getInt("PID")+" ");
+				//System.out.print(rs.getString("BRAND")+" ");
+				//System.out.print(rs.getString("PRODUCT_NAME")+" ");
+				//System.out.print(rs.getInt("PRICE")+" ");
+				//System.out.print(rs.getString("COLOUR")+" ");
+				//System.out.println(rs.getBoolean("EMI")+" ");
 			}
 		} catch (SQLException e1) {
 			//e.printStackTrace();
