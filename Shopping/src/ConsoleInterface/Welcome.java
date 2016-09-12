@@ -4,25 +4,22 @@ import java.io.BufferedReader;
 import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 
-import ShoppingDatabase.DatabaseOperations;
+import ShoppingDatabase.DBOperations;
+
 
 public class Welcome {
 			
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException, ClassNotFoundException {
 		System.out.println("Welcome MSCI Mobile Shopping Portal");
-		DatabaseOperations DB_Ops = new DatabaseOperations();
+		DBOperations DB_Ops = new DBOperations();
 		
 		// SOP the categories
+
 		DB_Ops.getCategory();
 		System.out.println("");
-		
-//		String category = reader;
-//		DB_Ops.getSubCategory(category);
-		
-//		System.out.println("Available Brands:");
-//		DB_Ops.getMobileBrands();
-		
+				
 		String brand;
 		String category;
 		String sub_category;
@@ -60,12 +57,7 @@ public class Welcome {
 			 System.out.println("Please enter Quantiy");
 			 quantity = Integer.parseInt(reader.readLine());
 			 DB_Ops.PurchaseItem(sub_category, pid, quantity);
-	        //DB_Ops.getMobileModels(brand);	
-	        //String model;
-			//System.out.println("Enter model name:");
-			//String str2 = reader.readLine();
-	        //model="\'"+ str2+"\' ";
-	        //DB_Ops.getModelDetails(brand, model);
+	        
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }		
