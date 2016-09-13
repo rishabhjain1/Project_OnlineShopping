@@ -11,6 +11,7 @@ public class DBOperations {
 	private DBSession dbConnection ;
 	
 	
+	// Method to get Categories
 	public void getCategory() throws SQLException, ClassNotFoundException{
 		dbConnection = new DBSession();
 		System.out.println("Categories available: ");
