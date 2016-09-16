@@ -53,11 +53,11 @@ public class SearchServlet  extends HttpServlet {
 				e.printStackTrace();
 			}
 			out.print("<br>");
-			out.print("<form action=CartServlet method=GET>");
+			out.print("<form action=CartServlet method=POST>");
 			out.print("<h3>");
 			out.print("Enter PID: <input type=text name = PID />");
 			out.print("<br>");
-			out.print("Quantity: <input type=text name = quantity/>");
+			out.print("Quantity: <input type=text name = quantity />");
 			out.print("<br>");
 			out.print("<input type=submit value = Purchase>");
 			out.print("<br>");
