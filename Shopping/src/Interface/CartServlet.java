@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ShoppingDatabase.DBSession;
+import ShoppingDatabase.*;
 @WebServlet("/CartServlet")
 public class CartServlet  extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -23,8 +23,23 @@ public class CartServlet  extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 PrintWriter out =response.getWriter();
-		String pid = request.getParameter("PID");
-		String quantity = request.getParameter("quantity");
+		int pid = Integer.parseInt(request.getParameter("PID"));
+		int quantity = Integer.parseInt(request.getParameter("quantity"));
+		
+		DBOps db = new DBOps();
+		int result;
+		try {
+			result = db.PurchaseItem(pid,quantity);
+			if (result==-1){
+				out.print("purchase sucessful");}
+			else
+				out.print("enter quantity less than "+ result);
+		} catch (NumberFormatException | ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}
 		
 		
 		
