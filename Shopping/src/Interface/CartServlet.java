@@ -26,7 +26,8 @@ public class CartServlet  extends HttpServlet {
 		String pid = request.getParameter("PID");
 		String quantity = request.getParameter("quantity");
 		
-		
+	}
+}
 		
 		
 		
