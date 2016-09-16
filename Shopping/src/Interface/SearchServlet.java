@@ -34,7 +34,7 @@ public class SearchServlet  extends HttpServlet {
 				out.print("<table><tr><th>PID</th><th>Product Name</th><th>Price</th></tr>");
 				
 				while(rs.next()) {
-					out.print("<tr><td>" + rs.getInt("PID")+ "</td><td>" +rs.getString("PRODUCT_NAME")+"</td><td> "+rs.getInt("PRICE")+"</td>)</tr>");
+					out.print("<tr><td>" + rs.getInt("PID")+ "</td><td>" +rs.getString("PRODUCT_NAME")+"</td><td> "+rs.getInt("PRICE")+"</td></tr>");
 				}
 				dbConnection.close();
 				out.print("</table>");
@@ -62,6 +62,16 @@ public class SearchServlet  extends HttpServlet {
 			out.print("<input type=submit value = Purchase>");
 			out.print("<br>");
 			out.print("</form>");
+			
+			out.print("<br>");
+			out.print("<br>");
+			out.print("<br>");
+			out.print("<form action=SpecificationServlet method=POST>");
+			out.print("<h3>");
+			out.print("Enter PID to know specification: <input type=text name = PID />");
+			out.print("<br>");
+			out.print("<input type=submit value = specification>");
 			out.print("</body></html>");
+			
 			}
 }
