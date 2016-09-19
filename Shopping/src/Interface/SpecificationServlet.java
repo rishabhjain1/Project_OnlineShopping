@@ -21,10 +21,12 @@ public class SpecificationServlet  extends HttpServlet {
     }
 
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 PrintWriter out =response.getWriter();
-		int pid = Integer.parseInt(request.getParameter("PID"));
+		int pid = Integer.parseInt(request.getParameter("p"));
+		
 		try {
+			
 			DBSession dbConnection = new DBSession();
 			String query = "SELECT ATTRIBUTE,ATT_VALUE FROM ATTRIBUTE_VALUES WHERE PID="+pid;
 			ResultSet rs = dbConnection.runQuery(query);
