@@ -4,6 +4,7 @@
     -webkit-flex-flow: row wrap;
     flex-flow: row wrap;
     text-align: center;
+    height:100vh;
 }
 
 .flex-container > * {
@@ -14,26 +15,27 @@
 
 .article {
     text-align: left;
+    height:85%;
+    width:85%;
 }
 
-header {background: black;color:white;}
-footer {background: 	#A0522D;color:white;}
+header {background: black;color:white; height:10%; width:100%}
+footer {background: #A0522D;color:white;height:5%;width:100%}
 
 
 .nav {
 	width: 10px;
 	background:lightgreen;
-	height: 500px;
 	}
 
 .nav ul {
     list-style-type: none;
  padding: 0;
 }
- .w3-btn{width:150px;
+ .w3-btn{width:80%;
  } 
  #frame {
- scrolling:"no";
+ scrolling:"yes";
  }  
 .nav ul a {
  text-decoration: none;
