@@ -7,3 +7,4 @@ Shopping/.classpath
 Shopping/src/UsersDatabase/UserDBSession.java
 Shopping/.settings/org.eclipse.jdt.core.prefs
 Shopping/WebContent/NewFile.jsp
+Shopping/WebContent/NewFile.html
