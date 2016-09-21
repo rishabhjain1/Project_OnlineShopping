@@ -9,3 +9,5 @@ Shopping/.settings/org.eclipse.jdt.core.prefs
 Shopping/WebContent/NewFile.jsp
 Shopping/WebContent/NewFile.html
 Shopping/WebContent/test.html
+*.java
+Shopping/WebContent/User.jsp
