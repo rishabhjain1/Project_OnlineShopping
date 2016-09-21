@@ -31,13 +31,13 @@ public class SearchServlet  extends HttpServlet {
 				String query = "SELECT DISTINCT PRODUCTS.PID, PRODUCT_NAME,PRICE FROM PRODUCTS JOIN PRODUCT_CATEGORY ON PRODUCTS.PID=PRODUCT_CATEGORY.PID WHERE PRODUCT_NAME LIKE '%"+search+"%'OR CATEGORY LIKE '%"+search+"%'";
 				ResultSet rs = dbConnection.runQuery(query);
 				out.print("<html><head><meta charset=ISO-8859-1><title>Insert title here</title></head><body>");
-				out.print("<table><tr><th>Product Name</th><th>Price</th></tr>");
+				out.print("<table><tr><th>Product Name</th><th>Price</th><th>Quantity</th></tr>");
 				
 				while(rs.next()) {
 					String productName = rs.getString("PRODUCT_NAME");
 					int price=rs.getInt("PRICE");
 					int pid=rs.getInt("PRODUCTS.PID");
-					out.print("<tr><td><a href = /Shopping/SpecificationServlet?p="+pid+">"+productName+"</a></td><td> "+price+"</td><td> </td></tr>");
+					out.print("<tr><td><a href = /Shopping/SpecificationServlet?p="+pid+">"+productName+"</a></td><td>    "+price+"</td><td><form action=UpdateCart method=POST><input type=number name=quantity > <input type=hidden name=pid value="+pid+"> <input type=hidden name=search value="+search+">  <input type=submit value=AddToCart ></form></td></tr>");
 					}
 					dbConnection.close();
 					out.print("</table>");
