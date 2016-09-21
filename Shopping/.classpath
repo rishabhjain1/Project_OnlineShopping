@@ -10,5 +10,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/home/saron/Documents/Jarfiles/com.mysql.jdbc_5.1.5.jar/com.mysql.jdbc_5.1.5.jar"/>
+	<classpathentry kind="lib" path="/home/saron/Documents/Jarfiles/jstl-1.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

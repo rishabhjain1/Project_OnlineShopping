@@ -90,4 +90,27 @@ public class DBOps {
 			ResultSet rs1 = dbConnection.runQuery(query1);
 			dbConnection.close();
 		}
+		public void insertCart(int pid, String user, int quantity) throws ClassNotFoundException, SQLException {
+			dbConnection = new DBSession();	
+			String query = "INSERT INTO CART (PID, USERID, QUANTITY) VALUES ("+pid+",'"+user+"',"+quantity+")";
+			dbConnection.runQuery(query);
+			dbConnection.close();
+		}
+		public int getCart(int pid, String user) throws ClassNotFoundException, SQLException {
+			dbConnection = new DBSession();	
+			String query = "SELECT COUNT(*) FROM CART WHERE PID="+pid+" AND USERID='"+user+"'";
+			ResultSet rs=dbConnection.runQuery(query);
+			rs.next();
+			int tmpQuantity=rs.getInt(1);
+			return tmpQuantity;
+					
+			
+		}
+
+		public void updateCart(int pid, String user, int quantity) throws ClassNotFoundException, SQLException {
+			dbConnection = new DBSession();	
+			String query = "UPDATE CART SET QUANTITY= "+quantity+" where pid = "+pid+" and userid= '"+user+"'";
+			dbConnection.runQuery(query);
+			dbConnection.close();
+		}
 }
