@@ -36,7 +36,7 @@ public class CartServlet  extends HttpServlet {
 			DBOps Db = new DBOps();
 			String html = Db.HTML(ID);
 			out.print(html);
-			out.print("<table><tr><th>Product Name</th><th>Price</th><th>Quantity</th><th>amount</th></tr>");
+			out.print("<center><table><tr><th>Product Name</th><th>Price</th><th>Quantity</th><th>amount</th></tr>");
 			int totalAmount=0;
 			while(rs.next()) {
 				String productName = rs.getString("PRODUCT_NAME");
@@ -48,10 +48,9 @@ public class CartServlet  extends HttpServlet {
 				out.print("<tr><td><a href = /Shopping/SpecificationServlet?p="+pid+">"+productName+"</a></td><td>    "+price+"</td><td>  "+quantity+"</td> <td>  "+amount+"</td></tr>");
 				}
 				dbConnection.close();
-				out.print("<tr><td></td><td></td><td></td><td></td>");
 				out.print("<tr><td></td><td></td><td>Total Amount = </td><td>"+totalAmount+"</td>");
-				out.print("<tr><td></td><td></td><td></td><td><form action=PurchaseServlet method=POST><input type=submit name = Purchase></form></td>");
-				out.print("</table>");
+				out.print("<tr><td colspan=4><form action=PurchaseServlet method=POST ><p align=center><input type=submit name = Purchase value=Purchase style=background:transparent;border:solid;color:white;font-size:20px;font-weight:700;></p></form></td>");
+				out.print("</table><center>");
 				
 		} catch (ClassNotFoundException e) {
 			out.print("HI");

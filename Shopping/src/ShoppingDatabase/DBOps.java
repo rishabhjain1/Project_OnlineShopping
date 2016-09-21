@@ -78,7 +78,7 @@ public class DBOps {
 		}
 		
 	// to update the quantity after purchase
-		private void setNcheckQuantity(int pid, int quantity) throws ClassNotFoundException, SQLException {
+		public void setNcheckQuantity(int pid, int quantity) throws ClassNotFoundException, SQLException {
 			dbConnection = new DBSession();
 			int tmpQuantity;
 			String query = "SELECT QUANTITY FROM PRODUCTS WHERE PID =" + pid;
@@ -87,7 +87,7 @@ public class DBOps {
 			tmpQuantity = rs.getInt(1);
 			tmpQuantity = tmpQuantity - quantity;
 			String query1 = "UPDATE PRODUCTS SET QUANTITY ="+tmpQuantity +" WHERE PID="+ pid;
-			ResultSet rs1 = dbConnection.runQuery(query1);
+			dbConnection.runQuery(query1);
 			dbConnection.close();
 		}
 		public void insertCart(int pid, String user, int quantity) throws ClassNotFoundException, SQLException {
@@ -144,11 +144,25 @@ public class DBOps {
 	            "table, th, td {border: 1px solid white;}"+
 	            "</style>"+
 	            "<body>"+
-	            "<p style= font-size:20px>" + ID + "!</p> <h1>ShoppingSpree</h1>"+ 
-	            "<p style= text-align:right>"+
-	            "<input type=submit id = s1 name= Cart value= Cart />"+
-	            "<input type=submit id = s2 name= OrderHistory value=OrderHistory />"+
-	            "<input type=submit id = s3 name= LogOut value=LogOut />"+
-	            "</p>");
+	            "<p style= font-size:20px align=right>Welcome " + ID + "!</p> <h1>ShoppingSpree</h1>"+ 
+	            "<form action=LogOutServlet method=POST style=float:right;>"+
+			    "<input type=submit id = s3 name= LogOut value=LogOut  style=background-color:black; color:white; >"+
+			    "</form>"+
+			    "<form action=CartServlet method=POST style=float:right;>"+  
+			"<input type=submit id = s1 name= Cart value=Cart  style=background-color:black; color:white; >"+
+			"</form>"+
+			"<form action=PurchaseServlet method=POST style=float:right;>"+
+			"<input type=submit id = s2 name= OrderHistory value=OrderHistory  style=background-color:black; color:white;/>"+
+			"</form>"+
+			"<form action=SearchServlet method=POST >"+
+			"<br>"+
+			"<br>"+
+			"<p align=center>"+
+			"<input type=search name=search id =srch placeholder = Search style = color:black;font-size:0.4in;text-align:center; />"+
+			"<br>"+
+			"<br>"+
+			"<input type=submit id=Sbmt value = Go style= text-align:center;>"+
+			"</p>"+
+			"</form>");
 		}
 }

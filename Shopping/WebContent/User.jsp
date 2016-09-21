@@ -27,21 +27,33 @@ background: transparent;
     color: white; 
     font-size:20px;
     font-weight:700;}
+#s3{background: transparent;
+    border:solid;
+    color: white; 
+    font-size:20px;
+    font-weight:700;}
 </style>
 
 <body>
 <% 
 String ID = (String) session.getAttribute("UserID");
 %>
-<p>
-<%=ID%>!
+<p align="right">
+Welcome <%=ID%>!
 </p>
 <h1>ShoppingSpree</h1>
-<p style="text-align:right">
-<input type="submit" id = "s1" name= "Cart" value="Cart" style="background-color:black; color:white;"/>
-<input type="submit" id = "s2" name= "OrderHistory" value="OrderHistory" style="background-color:black; color:white;"/>
-</p>
 
+
+
+<form action="LogOutServlet" method="POST" style="float: right;">
+<input type="submit" id = "s3" name= "LogOut" value="LogOut"  style="background-color:black; color:white;" >
+</form>
+<form action="CartServlet" method="POST" style="float: right;">  
+<input type="submit" id = "s1" name= "Cart" value="Cart"  style="background-color:black; color:white;" >
+</form>
+<form action="PurchaseServlet" method="POST" style="float: right;"> 
+<input type="submit" id = "s2" name= "OrderHistory" value="OrderHistory"  style="background-color:black; color:white;"/>
+</form>
 <form action="SearchServlet" method="POST" >
 <br>
 <br>

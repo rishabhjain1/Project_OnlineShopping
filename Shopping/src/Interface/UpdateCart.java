@@ -45,10 +45,10 @@ public class UpdateCart  extends HttpServlet {
 					result = db.PurchaseItem(pid,quantity);
 					if (result==-1){
 						db.updateCart(pid,user,quantity);
-						out.print("product already in cart, Quantity updated");
+						out.print("<center><h3>Product already in cart, Quantity updated</h3></center>");
 						}
 					else
-						out.print("enter quantity less than "+ result);
+						out.print("<center><h3>enter quantity less than "+ result+"</h3></center>");
 					}
 					catch (NumberFormatException | ClassNotFoundException | SQLException e) {
 							
@@ -62,7 +62,7 @@ public class UpdateCart  extends HttpServlet {
 						result = db.PurchaseItem(pid,quantity);
 						if (result==-1){
 							db.insertCart(pid,user,quantity);
-							out.print("purchase sucessful");
+							out.print("<center><h3>Product added to cart</h3></center>");
 							}
 						else
 							out.print("enter quantity less than "+ result);
