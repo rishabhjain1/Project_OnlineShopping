@@ -45,8 +45,8 @@ public class UpdateDBServlet extends HttpServlet {
 							+ "<td><a href = /Shopping/SpecificationServlet?p="+pid+">"+productName+"</a></td>"
 							+ "<td id ='price'>"+price+"</td>"
 							+ "<td id = 'quant'>"+ quantity+"</td>"
-							+ "<td id = 'btn'> <button class='w3-btn w3-blue'> UPDATE</button></td>"							
-							+ "<td id = 'btn'> <button class='w3-btn w3-red'> DELETE</button></td>"
+							+ "<td id = 'btn'><a href = /Shopping/updatingDBServlet?pid="+pid+"><button class='w3-btn w3-blue'> UPDATE</button></a></td>"							
+							+ "<td id = 'btn'><a href = /Shopping/deletingDBServlet?pid="+pid+"><button class='w3-btn w3-red'> DELETE</button></a></td>"
 						+"</tr>");
 				}
 				dbConnection.close();
