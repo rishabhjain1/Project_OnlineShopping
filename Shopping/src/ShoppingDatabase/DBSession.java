@@ -18,7 +18,7 @@ public class DBSession {
 	
 	// constructor 
 	public DBSession() throws SQLException, ClassNotFoundException {
-		DB_URL = "jdbc:mysql://localhost:3306/INVENTORY";
+		DB_URL = "jdbc:mysql://localhost:3306/PRODUCT_INVENTORY";
 		USER = "root";
 		PASS = "itsmyroot";
 		Class.forName("com.mysql.jdbc.Driver");
