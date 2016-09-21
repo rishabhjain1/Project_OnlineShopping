@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import ShoppingDatabase.*;
 @WebServlet("/UpdateCart")
@@ -26,20 +27,18 @@ public class UpdateCart  extends HttpServlet {
 		PrintWriter out =response.getWriter();
 		int quantity = Integer.parseInt(request.getParameter("quantity"));
 		int pid = Integer.parseInt(request.getParameter("pid"));
+		HttpSession session=request.getSession(false);
+		String ID = (String)session.getAttribute("UserID");
 		String search = request.getParameter("search");
-		String user="rishabh";
+		String user=ID;
 		if(search != null){
 			request.setAttribute("search",search);
 			RequestDispatcher rd=request.getRequestDispatcher("/SearchServlet");
 	        rd.include(request,response);
 		}
-		else{
-			RequestDispatcher rd=request.getRequestDispatcher("/CartServlet");
-	        rd.include(request,response);
-		}
 			DBOps db = new DBOps();
 			try {
-				int count =db.getCart(pid, user);
+				int count =db.getQuantity(pid, user);
 				if(count>0){
 					try {
 					int result;
@@ -73,10 +72,12 @@ public class UpdateCart  extends HttpServlet {
 					}
 				}
 			} catch (ClassNotFoundException | SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
+			if(search == null){
+				RequestDispatcher rd=request.getRequestDispatcher("/CartServlet");
+		        rd.forward(request,response);
+			}
 		}
 	}
 		
