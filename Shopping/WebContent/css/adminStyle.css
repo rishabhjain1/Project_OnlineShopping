@@ -14,13 +14,17 @@
 }
 
 .article {
-    text-align: left;
     height:85%;
     width:85%;
 }
 
-header {background: black;color:white; height:10%; width:100%}
-footer {background: #A0522D;color:white;height:5%;width:100%}
+header {background: black;color:white; height:10%; width:100%;}
+footer {background: #A0522D;color:white;height:5%;width:100%;}
+
+#hdr {
+	text-align:center;
+	margin:0% 10% 1% 10%;
+}
 
 
 .nav {
