@@ -1,0 +1,10 @@
+@CHARSET "UTF-8";
+
+#updating-attr-form {
+	background-color: lightgrey;
+	width: 80%;
+    height: 80%;
+    border: 25px solid green;
+    padding: 25px;
+    margin: 25px;
+}
