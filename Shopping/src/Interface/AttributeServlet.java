@@ -29,7 +29,7 @@ public class AttributeServlet extends HttpServlet {
 		int pid = Integer.parseInt(request.getParameter("pid"));
 		String att_name = request.getParameter("att_name");
 		String att_value = request.getParameter("att_value");
-		request.getRequestDispatcher("/updatingAtrrServlet?pid="+pid).include(request,response);
+		request.getRequestDispatcher("/specification.html").include(request,response);
 		try {
 			DBSession dbConnection = new DBSession();
 			String query = "SELECT PRODUCT_NAME FROM PRODUCTS WHERE PID="+pid;

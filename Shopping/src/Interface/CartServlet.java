@@ -46,7 +46,7 @@ public class CartServlet  extends HttpServlet {
 				}
 				dbConnection.close();
 				out.print("<tr><td></td><td></td><td id ='price'>Total Amount = </td><td id ='price'>"+totalAmount+"</td>");
-				out.print("<tr><td id ='price' colspan=4><form action=PurchaseServlet method=GET ><p align=center><input type=submit name = Purchase value=Purchase style=background:transparent;border:solid;color:black;font-size:20px;font-weight:700;></p></form></td>");
+				out.print("<tr><td id ='price' colspan=4><form action=PurchaseServlet method=GET ><p align=center><input type=submit name = Purchase value=Purchase style=background:SteelBlue;border-radius:10px;color:white;font-weight:700;></p></form></td>");
 				out.print("</table><center>");
 				
 		} catch (ClassNotFoundException e) {

@@ -102,7 +102,7 @@ public class DBOps {
 					out.print("<tr>"
 							+ "<td><a href = /Shopping/SpecificationServlet?p="+pid+">"+productName+"</a></td>"
 							+ "<td id ='price'>"+price+"</td>"
-							+"<td id = 'btn'><form action=UpdateCart method=GET><input type=number name=quantity > <input type=hidden name=pid value="+pid+"> <input type=hidden name=search value="+search+">  <input type=submit value=AddToCart ></form></td></tr>");
+							+"<td id = 'btn'><form action=UpdateCart method=GET><input type=number name=quantity > <input type=hidden name=pid value="+pid+"> <input type=hidden name=search value="+search+">  <input type=submit id=s1 value=AddToCart ></form></td></tr>");
 					}
 					dbConnection.close();
 					out.print("</table>");

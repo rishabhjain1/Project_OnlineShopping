@@ -35,6 +35,9 @@ public class SpecificationServlet  extends HttpServlet {
 			String query = "SELECT ATTRIBUTE,ATT_VALUE FROM ATTRIBUTE_VALUES WHERE PID="+pid;
 			ResultSet rs = dbConnection.runQuery(query);
 			request.getRequestDispatcher("/specification.html").include(request,response);
+			//DBOps Db = new DBOps();
+			//String html = Db.HTML(ID);
+			//out.print(html);
 			out.print("<p style= font-size:20px align=right>Welcome " + ID + "!</p>");
 			out.print("<center><table class='upd-table'><tr><th colspan=2>"+name+"</th></tr><tr><th>Attribute</th><th>Attribute_Value</th></tr>");
 			
@@ -43,7 +46,7 @@ public class SpecificationServlet  extends HttpServlet {
 			}
 			dbConnection.close();
 			out.print("</table></center>");
-			out.print("<form action= UpdateCart method = GET><p align=center><input type=number name=quantity placeholder=EnterQuantity >  <input type=submit value=Addtocart style=background: transparent;border:solid;color: white; ><input type=hidden name=pid value="+pid+" ></p> </form>");
+			out.print("<form action= UpdateCart method = GET><p align=center><input type=number name=quantity placeholder=EnterQuantity >  <input type=submit value=Addtocart style=background: SteelBlue;border-radius:10px;color: white; ><input type=hidden name=pid value="+pid+" ></p> </form>");
 		} catch (ClassNotFoundException e) {
 			out.print("HI");
 			e.printStackTrace();

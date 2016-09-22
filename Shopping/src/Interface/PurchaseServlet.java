@@ -53,6 +53,9 @@ public class PurchaseServlet  extends HttpServlet {
 			}
 			dbConnection.close();
 			DBSession dbConnection3 = new DBSession();
+			//DBOps Db = new DBOps();
+			//String html = Db.HTML(ID);
+			//out.print(html);
 			out.print("<p style= font-size:20px align=right>Welcome " + ID + "!</p>");
 			request.getRequestDispatcher("/cart.html").include(request,response);
 			String query3 = "SELECT DISTINCT BILL_NO, DATE, TIME FROM PURCHASE_HISTORY WHERE USERID='"+ID+"' ORDER BY BILL_NO ASC";
