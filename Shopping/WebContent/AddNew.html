@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-	<link rel="stylesheet" href="css/adminStyle.css">
-	<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
-	
+<meta charset="UTF-8">
+<title>Add New</title>
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="css/addproductformStyle.css">
 </head>
 <body>
-
-
-<div class="flex-container">
-<header>
-  <h1 id="hdr">Add New</h1>
-</header>
-
-<article class="article">
-
-</article>
+<div>
+<button class="w3-btn w3-red"  onclick="document.getElementById('add-product-form').style = 'display:show'" id ="updBtn">ADD PRODUCT</button>
+<button class="w3-btn w3-pink" id = "adnPropBtn">PRODUCT PROPERTIES </button>
 </div>
+
+<div id ='add-product-form' style="display:none">
+<form action="addProductServlet" method="POST">
+<label for='product_name'>PRODUCT NAME</label>
+<input type="text" name = "product-name" />
+<label for='quantity'>Quantity</label>
+<input type="text" name = "quantity"/>
+<label for='price'>PRICE</label>
+<input type="text" name = "price"/>
+<input class = 'formsubmit' type="submit" name = "Submit"/>
+</form>
+</div> 
 
 </body>
 </html>
