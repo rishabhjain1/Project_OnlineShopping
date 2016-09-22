@@ -36,18 +36,19 @@ public class SpecificationServlet  extends HttpServlet {
 			String name = rs1.getString("PRODUCT_NAME");
 			String query = "SELECT ATTRIBUTE,ATT_VALUE FROM ATTRIBUTE_VALUES WHERE PID="+pid;
 			ResultSet rs = dbConnection.runQuery(query);
-			
-			DBOps Db = new DBOps();
-			String html = Db.HTML(ID);
-			out.print(html);
-			out.print("<center><table><tr><th colspan=2>"+name+"</th></tr><tr><th>Attribute</th><th>Attribute_Value</th></tr>");
+			request.getRequestDispatcher("/specification.html").include(request,response);
+			//DBOps Db = new DBOps();
+			//String html = Db.HTML(ID);
+			//out.print(html);
+			out.print("<p style= font-size:20px align=right>Welcome " + ID + "!</p>");
+			out.print("<center><table class='upd-table'><tr><th colspan=2>"+name+"</th></tr><tr><th>Attribute</th><th>Attribute_Value</th></tr>");
 			
 			while(rs.next()) {
-				out.print("<tr><td>" + rs.getString("ATTRIBUTE")+ "</td><td>" +rs.getString("ATT_VALUE")+"</td></tr>");
+				out.print("<tr><td id ='price'>" + rs.getString("ATTRIBUTE")+ "</td><td id ='price'>" +rs.getString("ATT_VALUE")+"</td></tr>");
 			}
 			dbConnection.close();
 			out.print("</table></center>");
-			out.print("<form action= UpdateCart method = POST><p align=center><input type=number name=quantity placeholder=EnterQuantity >  <input type=submit value=Addtocart style=background: transparent;border:solid;color: white; ><input type=hidden name=pid value="+pid+" ></p> </form>");
+			out.print("<form action= UpdateCart method = GET><p align=center><input type=number name=quantity placeholder=EnterQuantity >  <input type=submit value=Addtocart style=background: transparent;border:solid;color: white; ><input type=hidden name=pid value="+pid+" ></p> </form>");
 		} catch (ClassNotFoundException e) {
 			out.print("HI");
 			e.printStackTrace();

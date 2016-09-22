@@ -23,7 +23,7 @@ public class SearchServlet  extends HttpServlet {
     }
 
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 PrintWriter out =response.getWriter();
 		String search = request.getParameter("search");
 		HttpSession session=request.getSession(false);
@@ -34,22 +34,33 @@ public class SearchServlet  extends HttpServlet {
 		else{
 		ID = "Guest";
 		}
-			try {
+		DBOps Db = new DBOps();
+		try {
+			Db.search(request, response, search,ID);
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+			/*try {
 				DBSession dbConnection = new DBSession();
 				String query = "SELECT DISTINCT PRODUCTS.PID, PRODUCT_NAME,PRICE FROM PRODUCTS JOIN PRODUCT_CATEGORY ON PRODUCTS.PID=PRODUCT_CATEGORY.PID WHERE PRODUCT_NAME LIKE '%"+search+"%'OR CATEGORY LIKE '%"+search+"%'";
 				ResultSet rs = dbConnection.runQuery(query);
-				
+				request.getRequestDispatcher("/search.html").include(request,response);
 				DBOps Db = new DBOps();
-				String html = Db.HTML(ID);
-				out.print(html);
-				out.print("<center>");			
-				out.print("<table><tr><th>Product Name</th><th>Price</th><th>Quantity</th></tr>");
+				//String html = Db.HTML(ID);
+				//out.print(html);
+				//out.print("<center>");			
+				out.print("<table class='upd-table'><tr><th>Product Name</th><th>Price</th><th>Quantity</th></tr>");
 				
 				while(rs.next()) {
 					String productName = rs.getString("PRODUCT_NAME");
 					int price=rs.getInt("PRICE");
 					int pid=rs.getInt("PRODUCTS.PID");
-					out.print("<tr><td><a href = /Shopping/SpecificationServlet?p="+pid+">"+productName+"</a></td><td>    "+price+"</td><td><form action=UpdateCart method=POST><input type=number name=quantity > <input type=hidden name=pid value="+pid+"> <input type=hidden name=search value="+search+">  <input type=submit value=AddToCart ></form></td></tr>");
+					out.print("<tr>"
+							+ "<td><a href = /Shopping/SpecificationServlet?p="+pid+">"+productName+"</a></td>"
+							+ "<td id ='price'>"+price+"</td>"
+							+"<td id = 'btn'><form action=UpdateCart method=GET><input type=number name=quantity > <input type=hidden name=pid value="+pid+"> <input type=hidden name=search value="+search+">  <input type=submit value=AddToCart ></form></td></tr>");
 					}
 					dbConnection.close();
 					out.print("</table>");
@@ -60,6 +71,6 @@ public class SearchServlet  extends HttpServlet {
 				} catch (SQLException e) {
 					out.print("I");
 					e.printStackTrace();
-				}
+				}*/
 		}
 }
