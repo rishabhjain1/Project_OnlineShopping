@@ -35,7 +35,7 @@ public class UpdateCart  extends HttpServlet {
 			    Db.update(response, ID, quantity, pid);
 			
 		        }catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			}
 		}
@@ -43,7 +43,7 @@ public class UpdateCart  extends HttpServlet {
 			 	try {
 					Db.update(response, ID, quantity, pid);
 				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 				RequestDispatcher rd=request.getRequestDispatcher("/CartServlet");

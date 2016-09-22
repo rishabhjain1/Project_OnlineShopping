@@ -33,7 +33,6 @@ public class SignUpServlet extends HttpServlet {
 		     {
 		         String docType = "<!doctype html public \"-//w3c//dtd html 4.0 " + "transitional//en\">\n";
 		    	 out.print(docType + "<HTML><body><h3><font color= white>User name exists, try another one</font></h3></body></HTML>");
-		    	 //session.invalidate();
 		         RequestDispatcher rd=request.getRequestDispatcher("/SignUp.html");
 		         rd.include(request,response);
 			 }

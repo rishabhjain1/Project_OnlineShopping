@@ -20,11 +20,9 @@ public class ProductServlet extends HttpServlet {
     
     public ProductServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		PrintWriter out =response.getWriter();
 		int price = Integer.parseInt(request.getParameter("price"));
 		int quantity = Integer.parseInt(request.getParameter("quantity"));
@@ -42,7 +40,6 @@ public class ProductServlet extends HttpServlet {
 	        out.print("alert('"+productName+" added to database');");
 	        out.println("</script>");
 		}catch (SQLException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

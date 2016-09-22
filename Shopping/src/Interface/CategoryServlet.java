@@ -20,11 +20,9 @@ public class CategoryServlet extends HttpServlet {
     
     public CategoryServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		PrintWriter out =response.getWriter();
 		int pid = Integer.parseInt(request.getParameter("pid"));
 		String category = request.getParameter("category");
@@ -41,7 +39,6 @@ public class CategoryServlet extends HttpServlet {
 	        out.print("alert('Category linked to "+name+"');");
 	        out.println("</script>");
 		}catch (SQLException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
