@@ -1,8 +1,6 @@
 package ShoppingDatabase;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,54 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 public class DBOps {
 
 	private DBSession dbConnection ;
-	
-	
-	// Method to get Categories
-	public void getCategory() throws SQLException, ClassNotFoundException{
-		dbConnection = new DBSession();
-		System.out.println("Categories available: ");
-		String query = "SELECT DISTINCT CATEGORY FROM CATEGORY";
-		ResultSet rs = dbConnection.runQuery(query);
-		while(rs.next()) {
-			System.out.println(rs.getString("CATEGORY")+" ");
-		}
-		dbConnection.close();
-	}
-	
-	// Method to get SubCategories
-	public void getSubCategory(String category) throws ClassNotFoundException, SQLException {
-		dbConnection = new DBSession();
-		System.out.println("Sub Categories in " + category+ "are: ");
-		String query = "SELECT SUB_CATEGORY FROM CATEGORY WHERE CATEGORY ="+category;
-		ResultSet rs = dbConnection.runQuery(query);
-		while(rs.next()) {
-			System.out.println(rs.getString("SUB_CATEGORY")+" ");
-		}
-		dbConnection.close();
-	}
-	
-	// Method to getBrands
-		public void getBrands(String sub_category) throws ClassNotFoundException, SQLException {
-			dbConnection = new DBSession();
-			String query = "SELECT DISTINCT BRAND FROM "+sub_category;
-			ResultSet rs =  dbConnection.runQuery(query);
-			while (rs.next()) {
-				System.out.println(rs.getString("BRAND")+" ");
-			}
-			dbConnection.close();
-		}
-	
-	// Method to get brand details
-		public void getBrandDetails(String sub_category,String brand) throws ClassNotFoundException, SQLException {
-			dbConnection = new DBSession();
-			String query = "SELECT * FROM " + sub_category+ " WHERE BRAND =" + brand;
-			ResultSet rs =  dbConnection.runQuery(query);
-			while (rs.next()) {
-				
-				System.out.printf("%5d %-10s %-10s %-7d %-10s %-2b\n", rs.getInt("PID"), rs.getString("BRAND"), rs.getString("PRODUCT_NAME"), rs.getInt("PRICE"), rs.getString("COLOUR"), rs.getBoolean("EMI"));
-			}			
-			dbConnection.close();
-		}
 		
 	// method to purchase item
 		public int PurchaseItem(int pid, int quantity) throws ClassNotFoundException, SQLException, NumberFormatException, IOException {
@@ -135,52 +85,13 @@ public class DBOps {
 					
 			
 		}
-		public String HTML(String ID)
-		{
-			return("<html><head><meta charset=ISO-8859-1><title>Insert title here</title></head>"+
-		            "<style>"+
-	           "#s1{background: transparent;border:solid;color: white; font-size:20px;font-weight:700;}"+
-	           "#s2{background: transparent; border:solid;color: white;"+"font-size:20px;font-weight:700;}"+ 
-	           "#s3{background: transparent; border:solid;color: white;"+"font-size:20px;font-weight:700;}"+
-	           "#btn{margin-left:700px;background: transparent;border:solid;color: white; font-size:15px;font-weight:20;}"+
-	           "#btn1{margin-left:600px;}p1{text-align:center;}"+
-	            "body {background-color:black; color : white;}"+ 
-	            "h1 {text-align:center}"+ 
-	            "table, th, td {border: 1px solid white;}"+
-	            "</style>"+
-	            "<body>"+
-	            "<p style= font-size:20px align=right>Welcome " + ID + "!</p> <h1>ShoppingSpree</h1>"+ 
-	            "<form action=LogOutServlet method=POST style=float:right;>"+
-			    "<input type=submit id = s3 name= LogOut value=LogOut  style=background-color:black; color:white; >"+
-			    "</form>"+
-			    "<form action=CartServlet method=POST style=float:right;>"+  
-			"<input type=submit id = s1 name= Cart value=Cart  style=background-color:black; color:white; >"+
-			"</form>"+
-			"<form action=PurchaseServlet method=POST style=float:right;>"+
-			"<input type=submit id = s2 name= OrderHistory value=OrderHistory  style=background-color:black; color:white;/>"+
-			"</form>"+
-			"<form action=SearchServlet method=POST >"+
-			"<br>"+
-			"<br>"+
-			"<p align=center>"+
-			"<input type=search name=search id =srch placeholder = Search style = color:black;font-size:0.4in;text-align:center; />"+
-			"<br>"+
-			"<br>"+
-			"<input type=submit id=Sbmt value = Go style= text-align:center;>"+
-			"</p>"+
-			"</form>");
-			
-		}
+
 		public void search(HttpServletRequest request, HttpServletResponse response, String search, String ID) throws ClassNotFoundException, SQLException, IOException, ServletException{
 				PrintWriter out =response.getWriter();
 				DBSession dbConnection = new DBSession();
 				String query = "SELECT DISTINCT PRODUCTS.PID, PRODUCT_NAME,PRICE FROM PRODUCTS JOIN PRODUCT_CATEGORY ON PRODUCTS.PID=PRODUCT_CATEGORY.PID WHERE PRODUCT_NAME LIKE '%"+search+"%'OR CATEGORY LIKE '%"+search+"%'";
 				ResultSet rs = dbConnection.runQuery(query);
-				request.getRequestDispatcher("/search.html").include(request,response);
-				DBOps Db = new DBOps();
-				//String html = Db.HTML(ID);
-				//out.print(html);
-				//out.print("<center>");	
+				request.getRequestDispatcher("/search.html").include(request,response);	
 				out.print("<p style= font-size:20px align=right>Welcome " + ID + "!</p>");
 				out.print("<table class='upd-table'><tr><th>Product Name</th><th>Price</th><th>Quantity</th></tr>");
 				
