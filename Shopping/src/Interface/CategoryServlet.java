@@ -13,12 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import ShoppingDatabase.DBSession;
 
-@WebServlet("/AttributeServlet")
-public class AttributeServlet extends HttpServlet {
+@WebServlet("/CategoryServlet")
+public class CategoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     
-    public AttributeServlet() {
+    public CategoryServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,19 +27,18 @@ public class AttributeServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		PrintWriter out =response.getWriter();
 		int pid = Integer.parseInt(request.getParameter("pid"));
-		String att_name = request.getParameter("att_name");
-		String att_value = request.getParameter("att_value");
-		request.getRequestDispatcher("/attribute.html").include(request,response);
+		String category = request.getParameter("category");
+		request.getRequestDispatcher("/category.html").include(request,response);
 		try {
 			DBSession dbConnection = new DBSession();
 			String query = "SELECT PRODUCT_NAME FROM PRODUCTS WHERE PID="+pid;
 			ResultSet rs=dbConnection.runQuery(query);
 			rs.next();
 			String name = rs.getString("PRODUCT_NAME");
-			String query1 = "INSERT INTO ATTRIBUTE_VALUES (PID,ATTRIBUTE,ATT_VALUE) VALUES ("+pid+", '"+att_name+"', '"+att_value+"')";
+			String query1 = "INSERT INTO PRODUCT_CATEGORY (PID,CATEGORY) VALUES ("+pid+", '"+category+"')";
 			dbConnection.runQuery(query1);
 			out.println("<script type=\"text/javascript\">");
-	        out.print("alert('Attribute added to "+name+"');");
+	        out.print("alert('Category linked to "+name+"');");
 	        out.println("</script>");
 		}catch (SQLException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
