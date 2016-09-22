@@ -11,7 +11,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import ShoppingDatabase.DBOps;
 import ShoppingDatabase.DBSession;
 @WebServlet("/SearchServlet")
 public class SearchServlet  extends HttpServlet {
@@ -24,54 +26,40 @@ public class SearchServlet  extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 PrintWriter out =response.getWriter();
 		String search = request.getParameter("search");
-		/* request.getRequestDispatcher("/Search.html").include(request,response);*/
-			 
+		HttpSession session=request.getSession(false);
+		String ID;
+		if(session != null){
+		ID = (String)session.getAttribute("UserID");
+		} 
+		else{
+		ID = "Guest";
+		}
 			try {
 				DBSession dbConnection = new DBSession();
-				String query = "SELECT PID,PRODUCT_NAME,PRICE FROM PRODUCTS WHERE PRODUCT_NAME LIKE '%"+search+"%'";
+				String query = "SELECT DISTINCT PRODUCTS.PID, PRODUCT_NAME,PRICE FROM PRODUCTS JOIN PRODUCT_CATEGORY ON PRODUCTS.PID=PRODUCT_CATEGORY.PID WHERE PRODUCT_NAME LIKE '%"+search+"%'OR CATEGORY LIKE '%"+search+"%'";
 				ResultSet rs = dbConnection.runQuery(query);
-				out.print("<html><head><meta charset=ISO-8859-1><title>Insert title here</title></head><body>");
-				out.print("<table><tr><th>PID</th><th>Product Name</th><th>Price</th></tr>");
+				
+				DBOps Db = new DBOps();
+				String html = Db.HTML(ID);
+				out.print(html);
+				out.print("<center>");			
+				out.print("<table><tr><th>Product Name</th><th>Price</th><th>Quantity</th></tr>");
 				
 				while(rs.next()) {
-					out.print("<tr><td>" + rs.getInt("PID")+ "</td><td>" +rs.getString("PRODUCT_NAME")+"</td><td> "+rs.getInt("PRICE")+"</td></tr>");
+					String productName = rs.getString("PRODUCT_NAME");
+					int price=rs.getInt("PRICE");
+					int pid=rs.getInt("PRODUCTS.PID");
+					out.print("<tr><td><a href = /Shopping/SpecificationServlet?p="+pid+">"+productName+"</a></td><td>    "+price+"</td><td><form action=UpdateCart method=POST><input type=number name=quantity > <input type=hidden name=pid value="+pid+"> <input type=hidden name=search value="+search+">  <input type=submit value=AddToCart ></form></td></tr>");
+					}
+					dbConnection.close();
+					out.print("</table>");
+					out.print("</center>");
+				} catch (ClassNotFoundException e) {
+					out.print("HI");
+					e.printStackTrace();
+				} catch (SQLException e) {
+					out.print("I");
+					e.printStackTrace();
 				}
-				dbConnection.close();
-				out.print("</table>");
-				/*
-				String query = "SELECT DISTINCT CATEGORY FROM CATEGORY";
-				ResultSet rs = dbConnection.runQuery(query);
-				while(rs.next()) {
-					out.print(rs.getString("CATEGORY")+" ");
-				}
-				dbConnection.close();*/
-			} catch (ClassNotFoundException e) {
-				out.print("HI");
-				e.printStackTrace();
-			} catch (SQLException e) {
-				out.print("I");
-				e.printStackTrace();
-			}
-			out.print("<br>");
-			out.print("<form action=CartServlet method=POST>");
-			out.print("<h3>");
-			out.print("Enter PID: <input type=text name = PID />");
-			out.print("<br>");
-			out.print("Quantity: <input type=text name = quantity />");
-			out.print("<br>");
-			out.print("<input type=submit value = Purchase>");
-			out.print("<br>");
-			out.print("</form>");
-			
-			out.print("<br>");
-			out.print("<br>");
-			out.print("<br>");
-			out.print("<form action=SpecificationServlet method=POST>");
-			out.print("<h3>");
-			out.print("Enter PID to know specification: <input type=text name = PID />");
-			out.print("<br>");
-			out.print("<input type=submit value = specification>");
-			out.print("</body></html>");
-			
-			}
+		}
 }

@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import ShoppingDatabase.*;
 @WebServlet("/SpecificationServlet")
@@ -21,22 +22,32 @@ public class SpecificationServlet  extends HttpServlet {
     }
 
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 PrintWriter out =response.getWriter();
-		int pid = Integer.parseInt(request.getParameter("PID"));
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out =response.getWriter();
+		int pid = Integer.parseInt(request.getParameter("p"));
+		HttpSession session=request.getSession(false);  
+		String ID = (String)session.getAttribute("UserID");
 		try {
+			
 			DBSession dbConnection = new DBSession();
+			String query1 = "SELECT PRODUCT_NAME FROM PRODUCTS WHERE PID="+pid;
+			ResultSet rs1 = dbConnection.runQuery(query1);
+			rs1.next();
+			String name = rs1.getString("PRODUCT_NAME");
 			String query = "SELECT ATTRIBUTE,ATT_VALUE FROM ATTRIBUTE_VALUES WHERE PID="+pid;
 			ResultSet rs = dbConnection.runQuery(query);
-			out.print("<html><head><meta charset=ISO-8859-1><title>Insert title here</title></head><body>");
-			out.print("<table><tr><th>Attribute</th><th>Attribute_Value</th></tr>");
+			
+			DBOps Db = new DBOps();
+			String html = Db.HTML(ID);
+			out.print(html);
+			out.print("<center><table><tr><th colspan=2>"+name+"</th></tr><tr><th>Attribute</th><th>Attribute_Value</th></tr>");
 			
 			while(rs.next()) {
 				out.print("<tr><td>" + rs.getString("ATTRIBUTE")+ "</td><td>" +rs.getString("ATT_VALUE")+"</td></tr>");
 			}
 			dbConnection.close();
-			out.print("</table>");
-			
+			out.print("</table></center>");
+			out.print("<form action= UpdateCart method = POST><p align=center><input type=number name=quantity placeholder=EnterQuantity >  <input type=submit value=Addtocart style=background: transparent;border:solid;color: white; ><input type=hidden name=pid value="+pid+" ></p> </form>");
 		} catch (ClassNotFoundException e) {
 			out.print("HI");
 			e.printStackTrace();

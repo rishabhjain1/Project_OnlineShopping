@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import UsersDatabase.UserDBOperations;
 
@@ -27,6 +28,8 @@ public class LoginServlet extends HttpServlet {
 		 PrintWriter out =response.getWriter();
 		 String usr_name = request.getParameter("UserID");
 		 String usr_pass = request.getParameter("Password");
+		 HttpSession session=request.getSession();
+		 session.setAttribute("UserID", usr_name);
 		 UserDBOperations usr_DBOps = new UserDBOperations();
 		 boolean check;
 		 try {
@@ -35,12 +38,11 @@ public class LoginServlet extends HttpServlet {
 			 {
 				 int accessLevel = usr_DBOps.getAccessLevel(usr_name);
 				 if (accessLevel == 2 ) {
-					 System.out.println("Hi");
 					 RequestDispatcher rd=request.getRequestDispatcher("/Admin.html");
 			         rd.forward(request,response);
 				 }
 				 else if (accessLevel == 1) {
-					 RequestDispatcher rd=request.getRequestDispatcher("/User.html");
+					 RequestDispatcher rd=request.getRequestDispatcher("/User.jsp");
 			         rd.forward(request,response);
 				 }
 		    	 

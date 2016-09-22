@@ -68,7 +68,7 @@ public class DBOps {
 			tmpQuantity = rs.getInt(1);
 			dbConnection.close();
 			if (tmpQuantity >= quantity){
-				setNcheckQuantity(pid, quantity);
+			//	setNcheckQuantity(pid, quantity);
 				return -1;
 			}
 			else {
@@ -78,7 +78,7 @@ public class DBOps {
 		}
 		
 	// to update the quantity after purchase
-		private void setNcheckQuantity(int pid, int quantity) throws ClassNotFoundException, SQLException {
+		public void setNcheckQuantity(int pid, int quantity) throws ClassNotFoundException, SQLException {
 			dbConnection = new DBSession();
 			int tmpQuantity;
 			String query = "SELECT QUANTITY FROM PRODUCTS WHERE PID =" + pid;
@@ -87,7 +87,82 @@ public class DBOps {
 			tmpQuantity = rs.getInt(1);
 			tmpQuantity = tmpQuantity - quantity;
 			String query1 = "UPDATE PRODUCTS SET QUANTITY ="+tmpQuantity +" WHERE PID="+ pid;
-			ResultSet rs1 = dbConnection.runQuery(query1);
+			dbConnection.runQuery(query1);
 			dbConnection.close();
+		}
+		public void insertCart(int pid, String user, int quantity) throws ClassNotFoundException, SQLException {
+			dbConnection = new DBSession();	
+			String query = "INSERT INTO CART (PID, USERID, QUANTITY) VALUES ("+pid+",'"+user+"',"+quantity+")";
+			dbConnection.runQuery(query);
+			dbConnection.close();
+		}
+		public int getQuantity(int pid, String user) throws ClassNotFoundException, SQLException {
+			dbConnection = new DBSession();	
+			String query = "SELECT COUNT(*) FROM CART WHERE PID="+pid+" AND USERID='"+user+"'";
+			ResultSet rs=dbConnection.runQuery(query);
+			rs.next();
+			int tmpQuantity=rs.getInt(1);
+			return tmpQuantity;
+					
+			
+		}
+
+		public void updateCart(int pid, String user, int quantity) throws ClassNotFoundException, SQLException {
+			dbConnection = new DBSession();	
+			if (quantity==0){
+				String query = "DELETE FROM CART WHERE pid = "+pid+"";
+				dbConnection.runQuery(query);
+			}
+			else{
+			String query = "UPDATE CART SET QUANTITY= "+quantity+" where pid = "+pid+" and userid= '"+user+"'";
+			dbConnection.runQuery(query);
+			}
+			dbConnection.close();
+		}
+		
+		public int getBillNo() throws ClassNotFoundException, SQLException {
+			dbConnection = new DBSession();	
+			String query = "SELECT COUNT(distinct BILL_NO) FROM PURCHASE_HISTORY;";
+			ResultSet rs=dbConnection.runQuery(query);
+			rs.next();
+			int count=rs.getInt(1);
+			return count;
+					
+			
+		}
+		public String HTML(String ID)
+		{
+			return("<html><head><meta charset=ISO-8859-1><title>Insert title here</title></head>"+
+		            "<style>"+
+	           "#s1{background: transparent;border:solid;color: white; font-size:20px;font-weight:700;}"+
+	           "#s2{background: transparent; border:solid;color: white;"+"font-size:20px;font-weight:700;}"+ 
+	           "#s3{background: transparent; border:solid;color: white;"+"font-size:20px;font-weight:700;}"+
+	           "#btn{margin-left:700px;background: transparent;border:solid;color: white; font-size:15px;font-weight:20;}"+
+	           "#btn1{margin-left:600px;}p1{text-align:center;}"+
+	            "body {background-color:black; color : white;}"+ 
+	            "h1 {text-align:center}"+ 
+	            "table, th, td {border: 1px solid white;}"+
+	            "</style>"+
+	            "<body>"+
+	            "<p style= font-size:20px align=right>Welcome " + ID + "!</p> <h1>ShoppingSpree</h1>"+ 
+	            "<form action=LogOutServlet method=POST style=float:right;>"+
+			    "<input type=submit id = s3 name= LogOut value=LogOut  style=background-color:black; color:white; >"+
+			    "</form>"+
+			    "<form action=CartServlet method=POST style=float:right;>"+  
+			"<input type=submit id = s1 name= Cart value=Cart  style=background-color:black; color:white; >"+
+			"</form>"+
+			"<form action=PurchaseServlet method=POST style=float:right;>"+
+			"<input type=submit id = s2 name= OrderHistory value=OrderHistory  style=background-color:black; color:white;/>"+
+			"</form>"+
+			"<form action=SearchServlet method=POST >"+
+			"<br>"+
+			"<br>"+
+			"<p align=center>"+
+			"<input type=search name=search id =srch placeholder = Search style = color:black;font-size:0.4in;text-align:center; />"+
+			"<br>"+
+			"<br>"+
+			"<input type=submit id=Sbmt value = Go style= text-align:center;>"+
+			"</p>"+
+			"</form>");
 		}
 }
