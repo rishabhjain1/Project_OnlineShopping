@@ -22,7 +22,7 @@ public class UpdateCart  extends HttpServlet {
     }
 
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			
 		PrintWriter out =response.getWriter();
 		int quantity = Integer.parseInt(request.getParameter("quantity"));
@@ -30,53 +30,29 @@ public class UpdateCart  extends HttpServlet {
 		HttpSession session=request.getSession(false);
 		String ID = (String)session.getAttribute("UserID");
 		String search = request.getParameter("search");
+		System.out.println(search);
 		String user=ID;
-		if(search != null){
-			request.setAttribute("search",search);
-			RequestDispatcher rd=request.getRequestDispatcher("/SearchServlet");
-	        rd.include(request,response);
-		}
-			DBOps db = new DBOps();
+		DBOps Db = new DBOps();
+		if(search != null ){
+			
 			try {
-				int count =db.getQuantity(pid, user);
-				if(count>0){
-					try {
-					int result;
-					result = db.PurchaseItem(pid,quantity);
-					if (result==-1){
-						db.updateCart(pid,user,quantity);
-						out.print("product already in cart, Quantity updated");
-						}
-					else
-						out.print("enter quantity less than "+ result);
-					}
-					catch (NumberFormatException | ClassNotFoundException | SQLException e) {
-							
-							e.printStackTrace();
-						}
-				}
-				
-				else{
-					try {
-						int result;
-						result = db.PurchaseItem(pid,quantity);
-						if (result==-1){
-							db.insertCart(pid,user,quantity);
-							out.print("purchase sucessful");
-							}
-						else
-							out.print("enter quantity less than "+ result);
-					} catch (NumberFormatException | ClassNotFoundException | SQLException e) {
-						
-						e.printStackTrace();
-					}
-				}
-			} catch (ClassNotFoundException | SQLException e1) {
-				e1.printStackTrace();
+				Db.search(request, response, search,ID);
+			    Db.update(response, ID, quantity, pid);
+			
+		        }catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			}
-			if(search == null){
+		}
+		if(search == null){
+			 	try {
+					Db.update(response, ID, quantity, pid);
+				} catch (ClassNotFoundException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				RequestDispatcher rd=request.getRequestDispatcher("/CartServlet");
-		        rd.forward(request,response);
+		        rd.include(request,response);
 			}
 		}
 	}
