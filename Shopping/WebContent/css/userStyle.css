@@ -19,7 +19,7 @@
 }
 
 header {background: SteelBlue;color:white; height:10%; width:100%;}
-footer {background: #A0522D;color:white;height:5%;width:100%;}
+footer {background: SteelBlue;color:white;height:5%;width:100%;}
 
 #hdr {
 	text-align:center;
@@ -101,7 +101,7 @@ tr:nth-child(even) {
 }
 #Odebtn{
 	border-radius : 30px;
-       }
+    background-color: steel blue;     }
 #srch{
 	width:50%;
 	height:10%;

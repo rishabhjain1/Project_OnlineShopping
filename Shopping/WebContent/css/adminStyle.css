@@ -18,8 +18,8 @@
     width:85%;
 }
 
-header {background: black;color:white; height:10%; width:100%;}
-footer {background: #A0522D;color:white;height:5%;width:100%;}
+header {background: SteelBlue;color:white; height:10%; width:100%;}
+footer {background: SteelBlue;color:white;height:5%;width:100%;}
 
 #hdr {
 	text-align:center;
@@ -29,7 +29,7 @@ footer {background: #A0522D;color:white;height:5%;width:100%;}
 
 .nav {
 	width: 10px;
-	background:lightgreen;
+	background:lightblue;
 	}
 
 .nav ul {

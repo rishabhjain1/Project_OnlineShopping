@@ -20,9 +20,11 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     public LoginServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		 PrintWriter out =response.getWriter();
 		 String usr_name = request.getParameter("UserID");
 		 String usr_pass = request.getParameter("Password");
@@ -47,14 +49,13 @@ public class LoginServlet extends HttpServlet {
 			 }
 			 else
 			 {
-
 		         request.getRequestDispatcher("/home.html").include(request,response);
 		         out.println("<script type=\"text/javascript\">");
 		         out.print("alert('Invalid Login please try again');");
 		         out.println("</script>");
 			 }		
 		 } catch (ClassNotFoundException | SQLException e) {
-
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		 }
 		  

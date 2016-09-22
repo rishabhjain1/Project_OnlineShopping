@@ -7,7 +7,27 @@
 	<link rel="stylesheet" href="css/loginsignupStyle.css">
 	<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 </head>
+<style>
+#li
+{
+ background-color: purple;
+}
+label
+{
+color: Blue;
+}
+button{
+border-radius: 10px; 
+}
+.formsubmit
+{
+  background-color: SteelBlue;
+  border-radius : 10px;
+  color: white;
+  width: 10%;
+}
 
+</style>
 <body>
 
 <div class="flex-container">
@@ -17,7 +37,7 @@
 
 <nav class="nav">
 <ul>
-  <p><button class="w3-btn w3-red" onclick="document.getElementById('login-form').style = 'display:show';document.getElementById('signup-form').style = 'display:none'" 
+  <p><button id = "li"class="w3-btn" onclick="document.getElementById('login-form').style = 'display:show';document.getElementById('signup-form').style = 'display:none'" 
 	  
   id ="loginBtn">LOGIN</button></p>
 <p><button class="w3-btn w3-pink"  
@@ -31,11 +51,11 @@
  
 <div id ='login-form' style="display:none">
 <form action="LoginServlet" method="POST">
-<label for='userID'>USERNAME</label>
+<label for='userID' id="l1">USERNAME</label>
 <input type="text" name = "UserID" />
 <label for='password'>PASSWORD</label>
 <input type="password" name = "Password"/>
-<input class = 'formsubmit' type="submit" name = "Submit"/>
+<input class = 'formsubmit' type="submit" name = "Login" value= "Login"/>
 </form>
 </div> 
  
