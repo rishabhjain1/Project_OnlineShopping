@@ -24,7 +24,7 @@ public class CartServlet  extends HttpServlet {
     }
 
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 PrintWriter out =response.getWriter();
 		 HttpSession session=request.getSession(false);  
 		String ID = (String)session.getAttribute("UserID");
@@ -32,11 +32,12 @@ public class CartServlet  extends HttpServlet {
 			DBSession dbConnection = new DBSession();
 			String query = "SELECT CART.PID, PRODUCT_NAME, CART.QUANTITY, PRICE FROM CART JOIN PRODUCTS WHERE CART.PID=PRODUCTS.PID AND USERID='"+ID+"'";
 			ResultSet rs = dbConnection.runQuery(query);
-			
-			DBOps Db = new DBOps();
-			String html = Db.HTML(ID);
-			out.print(html);
-			out.print("<table><tr><th>Product Name</th><th>Price</th><th>Quantity</th><th>amount</th></tr>");
+			request.getRequestDispatcher("/cart.html").include(request,response);
+			//DBOps Db = new DBOps();
+			//String html = Db.HTML(ID);
+			//out.print(html);
+			out.print("<p style= font-size:20px align=right>Welcome " + ID + "!</p>");
+			out.print("<center><table class='upd-table'><tr><th>Product Name</th><th>Price</th><th>Quantity</th><th>amount</th></tr>");
 			int totalAmount=0;
 			while(rs.next()) {
 				String productName = rs.getString("PRODUCT_NAME");
@@ -45,13 +46,12 @@ public class CartServlet  extends HttpServlet {
 				int quantity=rs.getInt("CART.QUANTITY");
 				int amount= quantity*price;
 				totalAmount = totalAmount+amount;
-				out.print("<tr><td><a href = /Shopping/SpecificationServlet?p="+pid+">"+productName+"</a></td><td>    "+price+"</td><td>  "+quantity+"</td> <td>  "+amount+"</td></tr>");
+				out.print("<tr><td><a href = /Shopping/SpecificationServlet?p="+pid+">"+productName+"</a></td><td id ='price'>    "+price+"</td><td id ='price'><form action=UpdateCart method=GET><input name=quantity id=q3 type=search value="+quantity+"  />"+  "<input type=hidden name=pid value="+pid+" /></form></td> <td id ='price'> "+amount+"</td></tr>");
 				}
 				dbConnection.close();
-				out.print("<tr><td></td><td></td><td></td><td></td>");
-				out.print("<tr><td></td><td></td><td>Total Amount = </td><td>"+totalAmount+"</td>");
-				out.print("<tr><td></td><td></td><td></td><td><form action=PurchaseServlet method=POST><input type=submit name = Purchase></form></td>");
-				out.print("</table>");
+				out.print("<tr><td></td><td></td><td id ='price'>Total Amount = </td><td id ='price'>"+totalAmount+"</td>");
+				out.print("<tr><td id ='price' colspan=4><form action=PurchaseServlet method=GET ><p align=center><input type=submit name = Purchase value=Purchase style=background:transparent;border:solid;color:black;font-size:20px;font-weight:700;></p></form></td>");
+				out.print("</table><center>");
 				
 		} catch (ClassNotFoundException e) {
 			out.print("HI");

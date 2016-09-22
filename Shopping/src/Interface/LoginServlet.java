@@ -38,12 +38,11 @@ public class LoginServlet extends HttpServlet {
 			 {
 				 int accessLevel = usr_DBOps.getAccessLevel(usr_name);
 				 if (accessLevel == 2 ) {
-					 System.out.println("Hi");
 					 RequestDispatcher rd=request.getRequestDispatcher("/Admin.html");
 			         rd.forward(request,response);
 				 }
 				 else if (accessLevel == 1) {
-					 RequestDispatcher rd=request.getRequestDispatcher("/User.jsp");
+					 RequestDispatcher rd=request.getRequestDispatcher("/User.html");
 			         rd.forward(request,response);
 				 }
 		    	 
