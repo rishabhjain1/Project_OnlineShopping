@@ -50,12 +50,10 @@ public class LoginServlet extends HttpServlet {
 			 }
 			 else
 			 {
-				 out.println("");
-				 String docType = "<!doctype html public \"-//w3c//dtd html 4.0 " + "transitional//en\">\n";
-		    	 out.print(docType + "<HTML><body> <br> <br> <br>  <br> <br> <h2><font color= white text-align = center>Invalid login. Please try again</font></h2></body></HTML>");
-		    	 //session.invalidate();
-		         RequestDispatcher rd=request.getRequestDispatcher("/Login.html");
-		         rd.include(request,response);
+		         request.getRequestDispatcher("/home.html").include(request,response);
+		         out.println("<script type=\"text/javascript\">");
+		         out.print("alert('Invalid Login please try again');");
+		         out.println("</script>");
 			 }		
 		 } catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
