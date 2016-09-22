@@ -30,21 +30,21 @@ public class SignUpServlet extends HttpServlet {
 		 boolean check;
 		 try {
 			check = usr_DBOps.doValidate(usr_name);
+			System.out.println(check);
 			if(check==false)
 		     {
-		         String docType = "<!doctype html public \"-//w3c//dtd html 4.0 " + "transitional//en\">\n";
-		    	 out.print(docType + "<HTML><body><h3><font color= white>User name exists, try another one</font></h3></body></HTML>");
-		    	 //session.invalidate();
-		         RequestDispatcher rd=request.getRequestDispatcher("/SignUp.html");
-		         rd.include(request,response);
+				request.getRequestDispatcher("/home.html").include(request,response);
+				out.print("<script type=\"text/javascript\">");
+		        out.print("alert('Username exists, try another name');");
+		        out.print("</script>");
 			 }
 		     else
-		     {
-		    	 String docType = "<!doctype html public \"-//w3c//dtd html 4.0 " + "transitional//en\">\n";
-		    	 out.print(docType + "<HTML><body><h3><font color= white> Signed Up successfully. Try Logging in</font></h3></body></HTML>");
+		     {	 
 		         usr_DBOps.addAccountDetails(usr_name,usr_pass);
-		    	 RequestDispatcher rd=request.getRequestDispatcher("/Login.html");
-		         rd.include(request,response);		    	 
+		         request.getRequestDispatcher("/home.html").include(request,response);
+		         out.print("<script type=\"text/javascript\">");
+		         out.print("alert('Signup successful! please Login');");
+		         out.print("</script>");
 		     }			
 			
 		} catch (ClassNotFoundException | SQLException e) {
