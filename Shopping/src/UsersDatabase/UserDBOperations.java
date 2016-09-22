@@ -48,9 +48,12 @@ public class UserDBOperations {
 		usr_dbConnection = new UserDBSession();
 		usr_name = "\'"+usr_name+"\'";
 		boolean check;
+		
+		
 		String query = "SELECT USER_PASS FROM USER_AUTH WHERE USER_NAME = "+usr_name;
-		ResultSet rs = usr_dbConnection.runQuery(query);
+		ResultSet rs = usr_dbConnection.runQuery(query);		
 		rs.next();
+				
 		if(rs.getString(1).equals( usr_pass)) {
 			check = true;
 		}
