@@ -8,3 +8,12 @@
     padding: 25px;
     margin: 25px;
 }
+
+#updating-cat-form {
+	background-color: lightgrey;
+	width: 80%;
+    height: 80%;
+    border: 25px solid green;
+    padding: 25px;
+    margin: 25px;
+}
