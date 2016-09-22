@@ -1,8 +1,6 @@
 package Interface;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
@@ -24,14 +22,11 @@ public class UpdateCart  extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			
-		PrintWriter out =response.getWriter();
 		int quantity = Integer.parseInt(request.getParameter("quantity"));
 		int pid = Integer.parseInt(request.getParameter("pid"));
 		HttpSession session=request.getSession(false);
 		String ID = (String)session.getAttribute("UserID");
 		String search = request.getParameter("search");
-		System.out.println(search);
-		String user=ID;
 		DBOps Db = new DBOps();
 		if(search != null ){
 			

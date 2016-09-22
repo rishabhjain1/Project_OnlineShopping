@@ -1,11 +1,7 @@
 package Interface;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import ShoppingDatabase.DBOps;
-import ShoppingDatabase.DBSession;
 @WebServlet("/SearchServlet")
 public class SearchServlet  extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -24,7 +19,6 @@ public class SearchServlet  extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 PrintWriter out =response.getWriter();
 		String search = request.getParameter("search");
 		HttpSession session=request.getSession(false);
 		String ID;
