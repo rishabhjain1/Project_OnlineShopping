@@ -38,22 +38,24 @@ public class BillServlet  extends HttpServlet {
 			String Time = rs1.getString("TIME");
 			String query = "SELECT PRODUCT_NAME, PURCHASE_HISTORY.PRICE, PURCHASE_HISTORY.quantity, DATE, TIME FROM PURCHASE_HISTORY JOIN PRODUCTS WHERE PURCHASE_HISTORY.PID=PRODUCTS.PID AND BILL_NO="+billNo;
 			ResultSet rs = dbConnection.runQuery(query);
-			DBOps Db = new DBOps();
-			String html = Db.HTML(ID);
+			//DBOps Db = new DBOps();
+			//String html = Db.HTML(ID);
 			int i=1;
-			out.print(html);
-			out.print("<center><table><tr><th colspan=5><h3>Shopping Spree Pvt Ltd.</h3></th></tr>"+
-					  "<tr><td colspan=3>Name:"+ID+"<br>Bill No: "+billNo+"</td><td colspan=2>Date:"+Date+"<br>Time:"+Time+"</td></tr>"+
+			request.getRequestDispatcher("/bill.html").include(request,response);
+			//out.print(html);
+			out.print("<p style= font-size:20px align=right>Welcome " + ID + "!</p>");
+			out.print("<center><table class='upd-table'><tr><th colspan=5><h3>Shopping Spree Pvt Ltd.</h3></th></tr>"+
+					  "<tr><td id ='price' colspan=3>Name:"+ID+"<br>Bill No: "+billNo+"</td><td id ='price' colspan=2>Date:"+Date+"<br>Time:"+Time+"</td></tr>"+
 					  "<tr><th>S No.</th><th>Product Name</th><th>Price</th><th>Quantity</th><th>Amount</th></tr>");
 			while(rs.next()) {
 				String productName = rs.getString("PRODUCT_NAME");
 				int price=rs.getInt("PURCHASE_HISTORY.PRICE");
 				int quantity=rs.getInt("PURCHASE_HISTORY.quantity");
 				int amount=price*quantity;
-				out.print("<tr><td>" +  i+ "</td><td>" +productName+"</td><td>" +price+"</td><td>" +quantity+"</td><td>" +amount+"</td></tr>");
+				out.print("<tr><td id ='price'>" +  i+ "</td><td id ='price'>" +productName+"</td><td id ='price'>" +price+"</td><td id ='price'>" +quantity+"</td><td id ='price'>" +amount+"</td></tr>");
 				i++;
 			}
-			out.print("<tr><td colspan=3></td><td colspan=1>Total Amount</td><td>"+totalAmount+"</td></tr>"+
+			out.print("<tr><td id ='price' colspan=3></td><td id ='price' colspan=1>Total Amount</td><td id ='price'>"+totalAmount+"</td></tr>"+
 					  "</table><center></body></html>");
 			dbConnection.close();
 			

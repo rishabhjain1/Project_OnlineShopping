@@ -24,7 +24,7 @@ public class PurchaseServlet  extends HttpServlet {
     }
 
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 PrintWriter out =response.getWriter();
 		 HttpSession session=request.getSession(false);  
 		String ID = (String)session.getAttribute("UserID");
@@ -55,12 +55,14 @@ public class PurchaseServlet  extends HttpServlet {
 			}
 			dbConnection.close();
 			DBSession dbConnection3 = new DBSession();
-			DBOps Db = new DBOps();
-			String html = Db.HTML(ID);
-			out.print(html);
-			String query3 = "SELECT DISTINCT BILL_NO, DATE, TIME FROM PURCHASE_HISTORY WHERE USERID='"+ID+"'";
+			//DBOps Db = new DBOps();
+			//String html = Db.HTML(ID);
+			//out.print(html);
+			out.print("<p style= font-size:20px align=right>Welcome " + ID + "!</p>");
+			request.getRequestDispatcher("/cart.html").include(request,response);
+			String query3 = "SELECT DISTINCT BILL_NO, DATE, TIME FROM PURCHASE_HISTORY WHERE USERID='"+ID+"' ORDER BY BILL_NO ASC";
 			ResultSet rs3 = dbConnection3.runQuery(query3);			
-			out.print("<center><table><tr><th>Bill No.</th><th>Amount</th><th>Date</th></tr>");
+			out.print("<center><table class='upd-table'><tr><th>Bill No.</th><th>Amount</th><th>Date</th></tr>");
 			while(rs3.next()) {
 			int billNo1 = rs3.getInt("BILL_NO");
 			String Date1= rs3.getString("DATE");
@@ -69,7 +71,7 @@ public class PurchaseServlet  extends HttpServlet {
 			ResultSet rs4 = dbConnection4.runQuery(query4);
 			rs4.next();
 			int amount = rs4.getInt(1);
-			out.print("<tr><td><a href = /Shopping/BillServlet?p="+billNo1+"&a="+amount+">"+billNo1+"</a></td><td>    "+amount+"</td><td>     "+Date1+"</td></tr>");
+			out.print("<tr><td id ='price'><a href = /Shopping/BillServlet?p="+billNo1+"&a="+amount+">"+billNo1+"</a></td><td id ='price'>    "+amount+"</td><td id ='price'>     "+Date1+"</td></tr>");
 			dbConnection4.close();
 			}
 			out.print("</table></center></body></html>");

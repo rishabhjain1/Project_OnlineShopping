@@ -3,8 +3,13 @@ package ShoppingDatabase;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class DBOps {
 
@@ -164,5 +169,79 @@ public class DBOps {
 			"<input type=submit id=Sbmt value = Go style= text-align:center;>"+
 			"</p>"+
 			"</form>");
+			
+		}
+		public void search(HttpServletRequest request, HttpServletResponse response, String search, String ID) throws ClassNotFoundException, SQLException, IOException, ServletException{
+				PrintWriter out =response.getWriter();
+				DBSession dbConnection = new DBSession();
+				String query = "SELECT DISTINCT PRODUCTS.PID, PRODUCT_NAME,PRICE FROM PRODUCTS JOIN PRODUCT_CATEGORY ON PRODUCTS.PID=PRODUCT_CATEGORY.PID WHERE PRODUCT_NAME LIKE '%"+search+"%'OR CATEGORY LIKE '%"+search+"%'";
+				ResultSet rs = dbConnection.runQuery(query);
+				request.getRequestDispatcher("/search.html").include(request,response);
+				DBOps Db = new DBOps();
+				//String html = Db.HTML(ID);
+				//out.print(html);
+				//out.print("<center>");	
+				out.print("<p style= font-size:20px align=right>Welcome " + ID + "!</p>");
+				out.print("<table class='upd-table'><tr><th>Product Name</th><th>Price</th><th>Quantity</th></tr>");
+				
+				while(rs.next()) {
+					String productName = rs.getString("PRODUCT_NAME");
+					int price=rs.getInt("PRICE");
+					int pid=rs.getInt("PRODUCTS.PID");
+					out.print("<tr>"
+							+ "<td><a href = /Shopping/SpecificationServlet?p="+pid+">"+productName+"</a></td>"
+							+ "<td id ='price'>"+price+"</td>"
+							+"<td id = 'btn'><form action=UpdateCart method=GET><input type=number name=quantity > <input type=hidden name=pid value="+pid+"> <input type=hidden name=search value="+search+">  <input type=submit value=AddToCart ></form></td></tr>");
+					}
+					dbConnection.close();
+					out.print("</table>");
+					out.print("</center>");
+		}
+		public void update(HttpServletResponse response, String ID, int quantity, int pid) throws IOException, ClassNotFoundException, SQLException{
+			PrintWriter out =response.getWriter();
+			DBOps db = new DBOps();
+			int count =db.getQuantity(pid, ID);
+			if(count>0){
+				try {
+				int result;
+				result = db.PurchaseItem(pid,quantity);
+				if (result==-1){
+					db.updateCart(pid,ID,quantity);
+					out.println("<script type=\"text/javascript\">");
+			        out.print("alert('Product already in cart, Quantity updated');");
+			        out.println("</script>");
+				}
+				else{
+					out.println("<script type=\"text/javascript\">");
+			        out.print("alert('enter quantity less than "+ result+"')");
+			        out.println("</script>");
+				}
+				}
+				catch (NumberFormatException | ClassNotFoundException | SQLException e) {
+						
+						e.printStackTrace();
+					}
+			}
+			
+			else{
+				try {
+					int result;
+					result = db.PurchaseItem(pid,quantity);
+					if (result==-1){
+						db.insertCart(pid,ID,quantity);
+						out.println("<script type=\"text/javascript\">");
+				        out.print("alert('Product added to cart')");
+				        out.println("</script>");
+						}
+					else{
+						out.println("<script type=\"text/javascript\">");
+				        out.print("alert('enter quantity less than "+ result+"')");
+				        out.println("</script>");
+					}
+				} catch (NumberFormatException | ClassNotFoundException | SQLException e) {
+					
+					e.printStackTrace();
+				}
+			}
 		}
 }
