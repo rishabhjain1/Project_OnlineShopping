@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 			         rd.forward(request,response);
 				 }
 				 else if (accessLevel == 1) {
-					 RequestDispatcher rd=request.getRequestDispatcher("/User.jsp");
+					 RequestDispatcher rd=request.getRequestDispatcher("/User.html");
 			         rd.forward(request,response);
 				 }
 		    	 
